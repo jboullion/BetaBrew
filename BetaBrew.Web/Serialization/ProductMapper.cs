@@ -2,7 +2,7 @@
 
 namespace BetaBrew.Web.Serialization
 {
-    public class ProductMapper
+    public static class ProductMapper
     {
         /// <summary>
         /// Maps a Product data model into a ProductModel View Model
