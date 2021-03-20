@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BetaBrew.Data\BetaBrew.Data.csproj" />
+    <ProjectReference Include="..\BetaBrew.Services\BetaBrew.Services.csproj" />
   </ItemGroup>
 
 </Project>

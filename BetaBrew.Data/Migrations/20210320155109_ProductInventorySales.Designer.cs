@@ -3,15 +3,17 @@ using System;
 using BetaBrew.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BetaBrew.Data.Migrations
 {
     [DbContext(typeof(BetaBrewDbContext))]
-    partial class BetaBrewDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210320155109_ProductInventorySales")]
+    partial class ProductInventorySales
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,7 +126,7 @@ namespace BetaBrew.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("BetaBrew.Data.Models.ProductInventory", b =>
