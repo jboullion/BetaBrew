@@ -45,9 +45,7 @@ namespace BetaBrew.Web
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BetaBrew.Web v1"));
+                
             }
 
             app.UseHttpsRedirection();

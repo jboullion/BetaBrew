@@ -1,4 +1,6 @@
-﻿using BetaBrew.Services.Product;
+﻿using System.Linq;
+using BetaBrew.Services.Product;
+using BetaBrew.Web.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,8 +22,11 @@ namespace BetaBrew.Web.Controllers
         public ActionResult GetProduct()
         {
             _logger.LogInformation("Getting all products");
-            _productService.GetAllProducts();
-            return Ok("");
+            
+            var products = _productService.GetAllProducts();
+            var productViewModels = products.Select(product => ProductMapper.SerializeProductModel(product));
+            
+            return Ok(productViewModels);
         }
     }
 }
