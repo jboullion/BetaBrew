@@ -48,8 +48,6 @@ namespace BetaBrew.Services.Customer
             try
             {
                 _db.Customers.Add(customer);
-                
-                // TODO: Customer address?
 
                 _db.SaveChanges();
 

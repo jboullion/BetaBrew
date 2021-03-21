@@ -33,6 +33,24 @@ namespace BetaBrew.Web.Controllers
             _orderService.GenerateInvoiceForOrder(order);
             return Ok();
         }
+
+
+        [HttpGet("/api/order")]
+        public ActionResult GetOrders()
+        {
+            _logger.LogInformation("Getting All Orders");
+            var orders = _orderService.GetOrders();
+            var orderModels = OrderMapper.SerializeOrdersToViewModel(orders);
+            return Ok(orderModels);
+        }
+
+        [HttpPatch("/api/order/complete/{id}")]
+        public ActionResult CompleteOrder(int id)
+        {
+            _logger.LogInformation("Completing Order");
+            _orderService.MarkFulfilled(id);
+            return Ok();
+        }
         
         
     }
