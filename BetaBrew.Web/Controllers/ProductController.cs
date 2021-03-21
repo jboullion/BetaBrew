@@ -19,7 +19,7 @@ namespace BetaBrew.Web.Controllers
         }
         
         [HttpGet("/api/product")]
-        public ActionResult GetProduct()
+        public ActionResult GetProducts()
         {
             _logger.LogInformation("Getting all products");
             
@@ -27,6 +27,16 @@ namespace BetaBrew.Web.Controllers
             var productViewModels = products.Select(product => ProductMapper.SerializeProductModel(product));
             
             return Ok(productViewModels);
+        }
+        
+        [HttpPatch("/api/product/{id}")]
+        public ActionResult ArchiveProduct(int id)
+        {
+            _logger.LogInformation($"Archiving Product {id}");
+            
+            var product = _productService.ArchiveProduct(id);
+            
+            return Ok(product);
         }
     }
 }
