@@ -1,3 +1,4 @@
+// $ npm run lint -- --fix
 module.exports = {
   root: true,
   env: {
