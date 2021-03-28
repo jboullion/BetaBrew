@@ -53,7 +53,9 @@ import { IShipment } from "@/types/Shipment";
 import BetaButton from "@/components/BetaButton.vue";
 import NewProductModal from "@/components/Modals/NewProductModal.vue";
 import ShipmentModal from "@/components/Modals/ShipmentModal.vue";
+import { InventoryService } from "@/services/inventory-service";
 
+const inventoryService = new InventoryService();
 
 @Component({
   name: "Inventory",
@@ -63,38 +65,7 @@ export default class Inventory extends Vue {
   isNewProductVisible = false;
   isShipmentVisible = false;
 
-  inventory: IProductInventory[] = [
-    {
-      id: 1,
-      product: {
-        id: 1,
-        name: "Product 1",
-        description: "The first product",
-        price: 10,
-        createdOn: new Date(),
-        updatedOn: new Date(),
-        isTaxable: true,
-        isArchived: false,
-      },
-      quantityOnHand: 100,
-      idealQuantity: 100,
-    },
-    {
-      id: 2,
-      product: {
-        id: 2,
-        name: "Product 2",
-        description: "The second product",
-        price: 30,
-        createdOn: new Date(),
-        updatedOn: new Date(),
-        isTaxable: true,
-        isArchived: false,
-      },
-      quantityOnHand: 80,
-      idealQuantity: 75,
-    },
-  ];
+  inventory: IProductInventory[] = [];
 
   showNewProductModal(): void {
     this.isNewProductVisible = true;
@@ -115,6 +86,15 @@ export default class Inventory extends Vue {
   closeModals(): void {
     this.isShipmentVisible = false;
     this.isNewProductVisible = false;
+  }
+
+  async initialize(): Promise<void> {
+    this.inventory = await inventoryService.getInventory();
+
+  }
+
+  async created(): Promise<void> {
+    await this.initialize();
   }
 }
 </script>

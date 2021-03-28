@@ -87,6 +87,5 @@ export default class NewProductModal extends Vue {
   list-style: none;
   padding: 0;
   margin: 0;
-
 }
 </style>

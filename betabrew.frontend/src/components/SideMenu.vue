@@ -5,16 +5,32 @@
     </router-link>
     <h1>Management Portal</h1>
 
-    <beta-button id="menuInventory" :link="'/inventory'" is-full-width>
+    <beta-button
+      id="menuInventory"
+      is-full-width
+      @button:click="goToRoute('/inventory')"
+    >
       Inventory
     </beta-button>
-    <beta-button id="menuCustomers" :link="'/customers'" is-full-width>
+    <beta-button
+      id="menuCustomers"
+      is-full-width
+      @button:click="goToRoute('/customers')"
+    >
       Customers
     </beta-button>
-    <beta-button id="menuInvoice" :link="'/invoice/new'" is-full-width>
+    <beta-button
+      id="menuInvoice"
+      is-full-width
+      @button:click="goToRoute('/invoice/new')"
+    >
       New Invoice
     </beta-button>
-    <beta-button id="menuOrders" :link="'/orders'" is-full-width>
+    <beta-button
+      id="menuOrders"
+      is-full-width
+      @button:click="goToRoute('/orders')"
+    >
       Orders
     </beta-button>
   </div>
@@ -28,7 +44,11 @@ import BetaButton from "@/components/BetaButton.vue";
   name: "SideMenu",
   components: { BetaButton },
 })
-export default class SideMenu extends Vue {}
+export default class SideMenu extends Vue {
+  goToRoute(route: string): void {
+    this.$router.push({ path: route });
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
