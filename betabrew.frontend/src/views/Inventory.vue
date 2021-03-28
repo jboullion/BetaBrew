@@ -47,11 +47,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { IProductInventory } from "@/types/Product";
+import { IProduct, IProductInventory } from "@/types/Product";
+import { IShipment } from "@/types/Shipment";
 
 import BetaButton from "@/components/BetaButton.vue";
 import NewProductModal from "@/components/Modals/NewProductModal.vue";
 import ShipmentModal from "@/components/Modals/ShipmentModal.vue";
+
 
 @Component({
   name: "Inventory",
@@ -102,12 +104,12 @@ export default class Inventory extends Vue {
     this.isShipmentVisible = true;
   }
 
-  saveNewProduct(): void {
-    console.log("saveNewProduct");
+  saveNewProduct(product: IProduct): void {
+    console.log(product);
   }
 
-  saveShipment(): void {
-    console.log("saveShipment");
+  saveShipment(shipment: IShipment): void {
+    console.log(shipment);
   }
 
   closeModals(): void {

@@ -3,10 +3,14 @@
     <template v-slot:header>Receive Shipment</template>
     <template v-slot:body>
       <label for="product">Product Received:</label>
-      <select v-modal="selectedProduct" class="shipmentItems" id="product">
+      <select v-model="selectedProduct" class="shipmentItems" id="product">
         <option disabled value="">Select Product</option>
-        <option v-for="item in inventroy" :value="item" :key="item.product.id">
-          {{ item.product.name }}
+        <option
+          v-for="item in inventory"
+          :value="item.product"
+          :key="item.product.id"
+        >
+          {{ item.product.name + " " + item.product.id }}
         </option>
       </select>
 
@@ -73,21 +77,4 @@ export default class ShipmentModal extends Vue {
 <style scoped lang="scss">
 @import "@/scss/global.scss";
 
-input[type="text"],
-input[type="number"],
-select {
-  width: 100%;
-  height: 2rem;
-  margin-bottom: 1.2rem;
-  font-size: 1.1rem;
-  line-height: 1.3rem;
-  padding: 0.2rem;
-  color: #555;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 0.3rem;
-}
 </style>

@@ -88,32 +88,5 @@ export default class NewProductModal extends Vue {
   padding: 0;
   margin: 0;
 
-  input[type="text"],
-  input[type="number"],
-  textarea {
-    width: 100%;
-    height: 2rem;
-    margin-bottom: 1.2rem;
-    font-size: 1.1rem;
-    line-height: 1.3rem;
-    padding: 0.2rem;
-    color: #555;
-  }
-
-  input[type="checkbox"] {
-    margin-bottom: 1.2rem;
-    height: 1.8rem;
-    width: 30px;
-  }
-
-  textarea {
-    height: 4rem;
-  }
-
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 0.3rem;
-  }
 }
 </style>
