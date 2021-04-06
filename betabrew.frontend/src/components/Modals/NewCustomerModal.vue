@@ -54,7 +54,6 @@
             v-model="newCustomer.primaryAddress.postalCode"
           />
         </li>
-
       </ul>
     </template>
     <template v-slot:footer>
@@ -102,7 +101,7 @@ export default class NewCustomerModal extends Vue {
       state: '',
       postalCode: '',
       country: '',
-    }
+    },
   }
 
   close(): void {

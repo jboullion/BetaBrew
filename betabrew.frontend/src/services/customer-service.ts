@@ -1,4 +1,5 @@
 import { ICustomer } from '@/types/Customer'
+import { IServiceResponse } from '@/types/ServiceResponse'
 import axios from 'axios'
 
 /**
@@ -13,13 +14,13 @@ export class CustomerService {
     return result.data
   }
 
-  public async deleteCustomer(customerId: number) {
-    const result = await axios.delete(`${this.API_URL}/customer/` + customerId)
+  public async deleteCustomer(customerId: number): Promise<boolean> {
+    const result = await axios.delete(`${this.API_URL}/customer/${customerId}` )
 
     return result.data
   }
 
-  public async createCustomer(customer: ICustomer) {
+  public async createCustomer(customer: ICustomer): Promise<IServiceResponse<ICustomer>> {
     const result = await axios.post(`${this.API_URL}/customer/`, customer)
 
     return result.data

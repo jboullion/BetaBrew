@@ -3,10 +3,10 @@
     <h1 id="inventoryTitle" class="page-title">Inventory</h1>
 
     <div class="inventory-actions">
-      <beta-button id="addNewBtn" @click.native="showNewProductModal">
+      <beta-button id="addNewBtn" @button:click="showNewProductModal">
         Add New Item
       </beta-button>
-      <beta-button id="receiveShipmentBtn" @click.native="showShipmentModal">
+      <beta-button id="receiveShipmentBtn" @button:click="showShipmentModal">
         Receive Shipment
       </beta-button>
     </div>
