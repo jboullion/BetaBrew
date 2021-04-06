@@ -1,19 +1,25 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
-import Inventory from "../views/Inventory.vue";
+import Vue from 'vue'
+import VueRouter, { RouteConfig } from 'vue-router'
+import Inventory from '../views/Inventory.vue'
+import Customers from '../views/Customers.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Inventory,
   },
   {
-    path: "/inventory",
-    name: "Inventory",
+    path: '/inventory',
+    name: 'Inventory',
     component: Inventory,
+  },
+  {
+    path: '/customers',
+    name: 'Customers',
+    component: Customers,
   },
   // {
   //   path: "/",
@@ -29,12 +35,12 @@ const routes: Array<RouteConfig> = [
   //   component: () =>
   //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
   // },
-];
+]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
-});
+})
 
-export default router;
+export default router

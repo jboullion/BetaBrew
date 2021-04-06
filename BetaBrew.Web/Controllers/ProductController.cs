@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BetaBrew.Services.Product;
 using BetaBrew.Web.Serialization;
+using BetaBrew.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -38,5 +40,26 @@ namespace BetaBrew.Web.Controllers
             
             return Ok(product);
         }
+
+        [HttpPost("/api/product/")]
+        public ActionResult CreateProduct([FromBody] ProductModel product)
+        {
+               
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Creating Product");
+
+            product.CreatedOn = DateTime.UtcNow;
+            product.UpdatedOn = DateTime.UtcNow;
+
+            var productData = ProductMapper.SerializeProductModel(product);
+            var newProduct = _productService.CreateProduct(productData);
+
+            return Ok(newProduct);
+        }
     }
 }
+ 

@@ -37,23 +37,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import BetaButton from "@/components/BetaButton.vue";
+import { Component, Vue } from 'vue-property-decorator'
+import BetaButton from '@/components/BetaButton.vue'
 
 @Component({
-  name: "SideMenu",
+  name: 'SideMenu',
   components: { BetaButton },
 })
 export default class SideMenu extends Vue {
   goToRoute(route: string): void {
-    this.$router.push({ path: route });
+    this.$router.push({ path: route })
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/scss/global.scss";
+@import '@/scss/global.scss';
 
 .side-menu-container {
   background-color: #fcfcfc;

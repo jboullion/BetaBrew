@@ -30,6 +30,12 @@ namespace BetaBrew.Web.Controllers
         [HttpPost("/api/customer")]
         public ActionResult CreateCustomer([FromBody] CustomerModel customer)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _logger.LogInformation("Creating Customer");
 
             customer.CreatedOn = DateTime.UtcNow;
@@ -68,7 +74,7 @@ namespace BetaBrew.Web.Controllers
             return Ok(customerModels);
         }
 
-        [HttpDelete("/api/customer")]
+        [HttpDelete("/api/customer/{id}")]
         public ActionResult DeleteCustomer(int id)
         {
             _logger.LogInformation("Deleting Customer");

@@ -24,24 +24,24 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import Vue from 'vue'
+import Component from 'vue-class-component'
 // import { Prop } from "vue-property-decorator";
 
 @Component({
-  name: "BetaModal",
+  name: 'BetaModal',
   components: {},
 })
 export default class BetaModal extends Vue {
   close(): void {
-    this.$emit("close");
+    this.$emit('close')
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/scss/global.scss";
+@import '@/scss/global.scss';
 
 .modal-backdrop {
   position: fixed;

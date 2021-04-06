@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace BetaBrew.Web
 {
@@ -33,7 +34,13 @@ namespace BetaBrew.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(opts =>
+                opts.SerializerSettings.ContractResolver = new DefaultContractResolver {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                }
+            );
+
             services.AddDbContext<BetaBrewDbContext>(opts =>
             {
                 opts.EnableDetailedErrors();

@@ -11,27 +11,27 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Prop } from 'vue-property-decorator'
 
 @Component({
-  name: "BetaButton",
+  name: 'BetaButton',
   components: {},
 })
 export default class BetaButton extends Vue {
   @Prop({ required: false, type: Boolean, default: false })
-  isFullWidth?: boolean;
+  isFullWidth?: boolean
 
   onClick(): void {
-    this.$emit("button:click");
+    this.$emit('button:click')
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/scss/global.scss";
+@import '@/scss/global.scss';
 
 .solar-button {
   background-color: lighten($brand-blue, 10%);

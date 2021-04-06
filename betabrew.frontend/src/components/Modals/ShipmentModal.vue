@@ -10,7 +10,7 @@
           :value="item.product"
           :key="item.product.id"
         >
-          {{ item.product.name + " " + item.product.id }}
+          {{ item.product.name + ' ' + item.product.id }}
         </option>
       </select>
 
@@ -29,51 +29,51 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import BetaButton from "@/components/BetaButton.vue";
-import BetaModal from "@/components/Modals/BetaModal.vue";
-import { IProduct, IProductInventory } from "@/types/Product";
-import { IShipment } from "@/types/Shipment";
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Prop } from 'vue-property-decorator'
+import BetaButton from '@/components/BetaButton.vue'
+import BetaModal from '@/components/Modals/BetaModal.vue'
+import { IProduct, IProductInventory } from '@/types/Product'
+import { IShipment } from '@/types/Shipment'
 
 @Component({
-  name: "ShipmentModal",
+  name: 'ShipmentModal',
   components: { BetaButton, BetaModal },
 })
 export default class ShipmentModal extends Vue {
   @Prop({ required: true, type: Array as () => IProductInventory[] })
-  inventory!: IProductInventory[];
+  inventory!: IProductInventory[]
 
   selectedProduct: IProduct = {
     id: 0,
     createdOn: new Date(),
     updatedOn: new Date(),
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     price: 0,
     isTaxable: false,
     isArchived: false,
-  };
+  }
 
-  qtyReceived = 1;
+  qtyReceived = 1
 
   close(): void {
-    this.$emit("close");
+    this.$emit('close')
   }
 
   save(): void {
     let shipment: IShipment = {
       productId: this.selectedProduct.id,
       adjustment: this.qtyReceived,
-    };
+    }
 
-    this.$emit("save:shipment", shipment);
+    this.$emit('save:shipment', shipment)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/scss/global.scss";
+@import '@/scss/global.scss';
 </style>

@@ -10,18 +10,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import SideMenu from "@/components/SideMenu.vue";
+import { Component, Vue } from 'vue-property-decorator'
+import SideMenu from '@/components/SideMenu.vue'
 
 @Component({
-  name: "App",
+  name: 'App',
   components: { SideMenu },
 })
 export default class App extends Vue {}
 </script>
 
 <style lang="scss">
-@import "@/scss/global.scss";
+@import '@/scss/global.scss';
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -46,15 +46,15 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import Vue from 'vue'
+import Component from 'vue-class-component'
 // import { Prop } from "vue-property-decorator";
-import BetaButton from "@/components/BetaButton.vue";
-import BetaModal from "@/components/Modals/BetaModal.vue";
-import { IProduct } from "@/types/Product";
+import BetaButton from '@/components/BetaButton.vue'
+import BetaModal from '@/components/Modals/BetaModal.vue'
+import { IProduct } from '@/types/Product'
 
 @Component({
-  name: "NewProductModal",
+  name: 'NewProductModal',
   components: { BetaButton, BetaModal },
 })
 export default class NewProductModal extends Vue {
@@ -62,26 +62,26 @@ export default class NewProductModal extends Vue {
     id: 0,
     createdOn: new Date(),
     updatedOn: new Date(),
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     price: 0,
     isTaxable: false,
     isArchived: false,
-  };
+  }
 
   close(): void {
-    this.$emit("close");
+    this.$emit('close')
   }
 
   save(): void {
-    this.$emit("save:product", this.newProduct);
+    this.$emit('save:product', this.newProduct)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "@/scss/global.scss";
+@import '@/scss/global.scss';
 
 .new-product-list {
   list-style: none;
