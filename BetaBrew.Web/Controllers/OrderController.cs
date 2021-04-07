@@ -34,6 +34,10 @@ namespace BetaBrew.Web.Controllers
             }
 
             _logger.LogInformation("Generating Invoice");
+
+            invoice.CreatedOn = DateTime.UtcNow;
+            invoice.UpdatedOn = DateTime.UtcNow;
+
             var order = OrderMapper.SerializeInvoiceToOrder(invoice);
             order.Customer = _customerService.GetCustomerById(invoice.CustomerId);
             _orderService.GenerateInvoiceForOrder(order);

@@ -19,7 +19,7 @@
         <th>Delete</th>
       </tr>
       <tr v-for="customer in customers" :key="customer.id">
-        <td>{{ customer.firstName + " " + customer.lastName }}</td>
+        <td>{{ customer.firstName + ' ' + customer.lastName }}</td>
         <td>
           {{ customer.primaryAddress.addressLine1 }}
           {{ customer.primaryAddress.addressLine2 }}

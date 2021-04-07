@@ -47,8 +47,6 @@ export default class ShipmentModal extends Vue {
 
   selectedProduct: IProduct = {
     id: 0,
-    createdOn: new Date(),
-    updatedOn: new Date(),
     name: '',
     description: '',
     price: 0,

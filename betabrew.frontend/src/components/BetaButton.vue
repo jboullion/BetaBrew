@@ -4,6 +4,7 @@
       @click="onClick"
       :class="['solar-button', { 'full-width': isFullWidth }]"
       type="button"
+      :disabled="disabled"
     >
       <slot></slot>
     </button>
@@ -22,6 +23,9 @@ import { Prop } from 'vue-property-decorator'
 export default class BetaButton extends Vue {
   @Prop({ required: false, type: Boolean, default: false })
   isFullWidth?: boolean
+
+  @Prop({ required: false, type: Boolean, default: false })
+  disabled?: boolean
 
   onClick(): void {
     this.$emit('button:click')

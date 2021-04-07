@@ -60,8 +60,6 @@ import { IProduct } from '@/types/Product'
 export default class NewProductModal extends Vue {
   newProduct: IProduct = {
     id: 0,
-    createdOn: new Date(),
-    updatedOn: new Date(),
     name: '',
     description: '',
     price: 0,
