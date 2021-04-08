@@ -28,9 +28,12 @@
         <h3>Step 2</h3>
 
         <label for="product">Select Product:</label>
-        <select v-model="newItem.Product" class="invoiceLineItem" id="product">
+        <select v-model="newItem.product" class="invoiceLineItem" id="product">
           <option>Select a Product</option>
-          <option :value="item.id" v-for="item in inventory" :key="item.id">
+          <option 
+            :value="item.product" 
+            v-for="item in inventory" 
+            :key="item.id">
             {{ item.product.name }}
           </option>
         </select>
@@ -42,7 +45,7 @@
       <div class="invoice-step-actions">
         <beta-button
           @button:click="addLineItem"
-          :disabled="!newItem.Product || !newItem.quantity"
+          :disabled="!newItem.product || !newItem.quantity"
         >
           Add Line Item
         </beta-button>
@@ -58,6 +61,39 @@
       <div class="invoice-step-detail">
         <h3>Step 3</h3>
       </div>
+    </div>
+
+    <div id="lineItems" v-if="lineItems.length">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th style="text-align: center">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="lineItem in lineItems" :key="lineItem.product.id">
+            <td class="remove" @click="deleteLineItem(lineItem.product.id)">
+              <span class="lni lni-cross-circle"></span>
+            </td>
+            <td>{{ lineItem.product.name }}</td>
+            <td>{{ lineItem.product.price | price }}</td>
+            <td>{{ lineItem.quantity }}</td>
+            <td style="text-align: center;">{{ (lineItem.product.price * lineItem.quantity) | price }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4" style="text-align: right;">Total</th>
+            <th style="text-align: center;">
+              {{ runningTotal | price }}
+            </th>
+          </tr>
+        </tfoot>
+      </table>
     </div>
 
     <div class="invoice-step-actions">
@@ -122,6 +158,16 @@ export default class CreateInvoice extends Vue {
     quantity: 0,
   }
 
+  get runningTotal(): number {
+    return this.lineItems.reduce((a, b) => a + b.product.price * b.quantity, 0)
+  }
+
+  deleteLineItem(productId: number): void {
+    this.lineItems = this.lineItems.filter(
+      (lineItem) => lineItem.product.id !== productId
+    )
+  }
+
   addLineItem(): void {
     let newItem: ISalesOrderItemModel = {
       product: this.newItem.product,
@@ -148,6 +194,7 @@ export default class CreateInvoice extends Vue {
       product: this.newProduct,
       quantity: 0,
     }
+
   }
 
   finalizeOrder(): void {
@@ -172,9 +219,7 @@ export default class CreateInvoice extends Vue {
   get canGoNext(): boolean {
     if (this.invoiceStep === 1 && this.selectedCustomer === 0) return false
 
-    if (this.invoiceStep === 2) {
-      return true
-    }
+    if (this.invoiceStep === 2 && ! this.lineItems.length) return false
 
     if (this.invoiceStep < this.maxInvoiceSteps) return true
 
@@ -226,5 +271,17 @@ export default class CreateInvoice extends Vue {
 .invoice-step-actions {
   padding: 15px;
   display: flex;
+}
+
+#lineItems {
+  padding: 15px;
+
+  .remove {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: $brand-red;
+    text-align: center;
+  }
 }
 </style>
