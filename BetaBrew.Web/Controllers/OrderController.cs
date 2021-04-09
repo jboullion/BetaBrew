@@ -41,8 +41,8 @@ namespace BetaBrew.Web.Controllers
 
             var order = OrderMapper.SerializeInvoiceToOrder(invoice);
             order.Customer = _customerService.GetCustomerById(invoice.CustomerId);
-            _orderService.GenerateInvoiceForOrder(order);
-            return Ok();
+            var invoiceResult = _orderService.GenerateInvoiceForOrder(order);
+            return Ok(invoiceResult);
         }
 
 

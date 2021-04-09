@@ -9,7 +9,7 @@
         <label for="customer">Select Customer:</label>
         <select
           v-if="customers.length"
-          v-model="selectedCustomer"
+          v-model="selectedCustomerId"
           id="customer"
         >
           <option>Select Customer</option>
@@ -30,10 +30,11 @@
         <label for="product">Select Product:</label>
         <select v-model="newItem.product" class="invoiceLineItem" id="product">
           <option>Select a Product</option>
-          <option 
-            :value="item.product" 
-            v-for="item in inventory" 
-            :key="item.id">
+          <option
+            :value="item.product"
+            v-for="item in inventory"
+            :key="item.id"
+          >
             {{ item.product.name }}
           </option>
         </select>
@@ -41,6 +42,11 @@
         <label for="quantity">Quantity:</label>
         <input v-model="newItem.quantity" id="quantity" type="number" min="0" />
       </div>
+
+      <line-items
+        :lineItems="lineItems"
+        :invoiceStep="invoiceStep"
+      ></line-items>
 
       <div class="invoice-step-actions">
         <beta-button
@@ -60,40 +66,60 @@
     <div class="invoice-step" v-if="invoiceStep === 3">
       <div class="invoice-step-detail">
         <h3>Step 3</h3>
-      </div>
-    </div>
 
-    <div id="lineItems" v-if="lineItems.length">
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th style="text-align: center">Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="lineItem in lineItems" :key="lineItem.product.id">
-            <td class="remove" @click="deleteLineItem(lineItem.product.id)">
-              <span class="lni lni-cross-circle"></span>
-            </td>
-            <td>{{ lineItem.product.name }}</td>
-            <td>{{ lineItem.product.price | price }}</td>
-            <td>{{ lineItem.quantity }}</td>
-            <td style="text-align: center;">{{ (lineItem.product.price * lineItem.quantity) | price }}</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colspan="4" style="text-align: right;">Total</th>
-            <th style="text-align: center;">
-              {{ runningTotal | price }}
-            </th>
-          </tr>
-        </tfoot>
-      </table>
+        <beta-button
+          @button:click="submitInvoice"
+          :disabled="!lineItems.length"
+        >
+          Submit Invoice
+        </beta-button>
+      </div>
+      <div id="invoice" ref="invoice">
+        <div class="invoice-logo">
+          <img
+            src="@/assets/images/logo.png"
+            id="imgLogo"
+            alt="Beta Brew Coffee"
+          />
+        </div>
+        <hr />
+        <h3>1337 Beta St</h3>
+        <h3>Underground, WI -90210</h3>
+        <h3>USA</h3>
+
+        <div class="invoice-order-list" v-if="lineItems.length">
+          <div class="invoice-header">
+            <h3>Invoice: {{ new Date() | humanizeDate }}</h3>
+            <h3>
+              Customer:
+              {{
+                this.selectedCustomer.firstName +
+                ' ' +
+                this.selectedCustomer.lastName
+              }}
+            </h3>
+
+            <h3>
+              Address: {{ this.selectedCustomer.primaryAddress.addressLine1 }}
+            </h3>
+            <h3 v-if="this.selectedCustomer.primaryAddress.addressLine2">
+              Address 2:
+              {{ this.selectedCustomer.primaryAddress.addressLine2 }}
+            </h3>
+            <h3>
+              {{ this.selectedCustomer.primaryAddress.city }},
+              {{ this.selectedCustomer.primaryAddress.state }},
+              {{ this.selectedCustomer.primaryAddress.postalCode }}
+            </h3>
+            <h3>{{ this.selectedCustomer.primaryAddress.country }}</h3>
+          </div>
+
+          <line-items
+            :lineItems="lineItems"
+            :invoiceStep="invoiceStep"
+          ></line-items>
+        </div>
+      </div>
     </div>
 
     <div class="invoice-step-actions">
@@ -111,7 +137,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator' //  Watch,
 
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+
 import BetaButton from '@/components/BetaButton.vue'
+import LineItems from '@/components/LineItems.vue'
 
 import { IInvoice, ISalesOrderItemModel } from '@/types/Invoice'
 import { ICustomer } from '@/types/Customer'
@@ -127,7 +157,7 @@ const invoiceService = new InvoiceService()
 
 @Component({
   name: 'CreateInvoice',
-  components: { BetaButton },
+  components: { BetaButton, LineItems },
 })
 export default class CreateInvoice extends Vue {
   invoiceStep = 1
@@ -140,7 +170,7 @@ export default class CreateInvoice extends Vue {
   inventory: IProductInventory[] = []
 
   customers: ICustomer[] = []
-  selectedCustomer = 0
+  selectedCustomerId = 0
 
   lineItems: ISalesOrderItemModel[] = []
 
@@ -158,8 +188,48 @@ export default class CreateInvoice extends Vue {
     quantity: 0,
   }
 
-  get runningTotal(): number {
-    return this.lineItems.reduce((a, b) => a + b.product.price * b.quantity, 0)
+  invoiceHeight = 0;
+
+  get selectedCustomer(): ICustomer {
+    return this.customers.find(
+      (customer) => customer.id == this.selectedCustomerId
+    )!
+  }
+
+  async submitInvoice(): Promise<void> {
+    this.invoice = {
+      customerId: this.selectedCustomerId,
+      lineItems: this.lineItems,
+    }
+
+    invoiceService.makeNewInvoice(this.invoice).then((result) => {
+      this.invoice = {
+        customerId: 0,
+        lineItems: [],
+      }
+
+      console.log(result)
+    })
+
+    this.downloadPdf();
+
+    await this.$router.push('/orders')
+  }
+
+  downloadPdf(): void {
+    let pdf = new jsPDF('p', 'pt', 'a4', true)
+    let domInvoice = document.getElementById('invoice')
+
+    if (domInvoice) {
+      let width = domInvoice.clientWidth
+      let height = domInvoice.clientHeight
+
+      html2canvas(domInvoice).then((canvas) => {
+        let image = canvas.toDataURL('image/png');
+        pdf.addImage(image, 'PNG', 0, 0, width * 0.55, height * 0.55)
+        pdf.save('inoive')
+      })
+    }
   }
 
   deleteLineItem(productId: number): void {
@@ -176,7 +246,7 @@ export default class CreateInvoice extends Vue {
 
     let existingItems = this.lineItems.map((item) => item.product.id)
 
-    if (existingItems.includes(newItem.product.id)){
+    if (existingItems.includes(newItem.product.id)) {
       let lineItem = this.lineItems.find(
         (item) => item.product.id === newItem.product.id
       )
@@ -194,7 +264,6 @@ export default class CreateInvoice extends Vue {
       product: this.newProduct,
       quantity: 0,
     }
-
   }
 
   finalizeOrder(): void {
@@ -202,7 +271,7 @@ export default class CreateInvoice extends Vue {
   }
 
   prev(): void {
-    if (this.invoiceStep === 1) return;
+    if (this.invoiceStep === 1) return
     this.invoiceStep -= 1
   }
 
@@ -217,9 +286,9 @@ export default class CreateInvoice extends Vue {
   }
 
   get canGoNext(): boolean {
-    if (this.invoiceStep === 1 && this.selectedCustomer === 0) return false
+    if (this.invoiceStep === 1 && this.selectedCustomerId === 0) return false
 
-    if (this.invoiceStep === 2 && ! this.lineItems.length) return false
+    if (this.invoiceStep === 2 && !this.lineItems.length) return false
 
     if (this.invoiceStep < this.maxInvoiceSteps) return true
 
@@ -228,7 +297,7 @@ export default class CreateInvoice extends Vue {
 
   startOver(): void {
     this.invoiceStep = 1
-    this.selectedCustomer = 0
+    this.selectedCustomerId = 0
 
     this.lineItems = []
 
@@ -273,15 +342,8 @@ export default class CreateInvoice extends Vue {
   display: flex;
 }
 
-#lineItems {
+#invoice {
+  border: 1px solid #ccc;
   padding: 15px;
-
-  .remove {
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: $brand-red;
-    text-align: center;
-  }
 }
 </style>
