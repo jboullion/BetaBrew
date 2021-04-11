@@ -145,21 +145,6 @@ export default class Inventory extends Vue {
 <style scoped lang="scss">
 @import '@/scss/global.scss';
 
-.green {
-  font-weight: bold;
-  color: $brand-green;
-}
-
-.yellow {
-  font-weight: bold;
-  color: $brand-yellow;
-}
-
-.red {
-  font-weight: bold;
-  color: $brand-red;
-}
-
 .inventory-actions {
   display: flex;
   margin-bottom: 0.8rem;

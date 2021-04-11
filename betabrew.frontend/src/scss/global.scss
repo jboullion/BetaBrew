@@ -3,6 +3,8 @@ $brand-red: #cc3020;
 $brand-green: #42b883;
 $brand-yellow: #FFBD59;
 
+$bright-blue: #335edd;
+
 $menu-width: 240px;
 
 $header-color: #111111;
@@ -50,6 +52,27 @@ hr {
     border-bottom: 2px solid lighten($brand-blue, 30%);
   }
 }
+
+.green {
+  font-weight: bold;
+  color: $brand-green;
+}
+
+.yellow {
+  font-weight: bold;
+  color: $brand-yellow;
+}
+
+.red {
+  font-weight: bold;
+  color: $brand-red;
+}
+
+.blue {
+  font-weight: bold;
+  color: $bright-blue;
+}
+
 
 a {
   text-decoration: none;
