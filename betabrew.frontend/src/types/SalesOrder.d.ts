@@ -1,5 +1,5 @@
-import { ICustomer } from "./Customer";
-import { ISalesOrderItemModel } from "./Invoice";
+import { ICustomer } from './Customer'
+import { ISalesOrderItemModel } from './Invoice'
 
 export interface ISalesOrder {
   id: number

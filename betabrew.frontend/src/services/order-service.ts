@@ -15,7 +15,9 @@ export class OrderService {
   }
 
   public async completeOrder(orderId: number): Promise<boolean> {
-	const result = await axios.patch(`${this.API_URL}/order/complete/${orderId}`)
+    const result = await axios.patch(
+      `${this.API_URL}/order/complete/${orderId}`
+    )
 
     return result.data
   }

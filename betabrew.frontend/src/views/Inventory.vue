@@ -2,6 +2,8 @@
   <div class="inventory-container">
     <h1 id="inventoryTitle" class="page-title">Inventory</h1>
 
+    <inventory-chart />
+
     <div class="inventory-actions">
       <beta-button id="addNewBtn" @button:click="showNewProductModal">
         Add New Item
@@ -63,6 +65,7 @@ import { IShipment } from '@/types/Shipment'
 import BetaButton from '@/components/BetaButton.vue'
 import NewProductModal from '@/components/Modals/NewProductModal.vue'
 import ShipmentModal from '@/components/Modals/ShipmentModal.vue'
+import InventoryChart from '@/components/Charts/InventoryChart.vue'
 import { InventoryService } from '@/services/inventory-service'
 import { ProductService } from '@/services/product-service'
 
@@ -71,7 +74,7 @@ const productService = new ProductService()
 
 @Component({
   name: 'Inventory',
-  components: { BetaButton, NewProductModal, ShipmentModal },
+  components: { BetaButton, NewProductModal, ShipmentModal, InventoryChart },
 })
 export default class Inventory extends Vue {
   isNewProductVisible = false
@@ -134,6 +137,7 @@ export default class Inventory extends Vue {
 
   async updateInventory(): Promise<void> {
     this.inventory = await inventoryService.getInventory()
+    await this.$store.dispatch('assignSnapshots')
   }
 
   async created(): Promise<void> {

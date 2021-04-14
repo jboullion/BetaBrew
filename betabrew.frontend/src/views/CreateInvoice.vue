@@ -188,7 +188,7 @@ export default class CreateInvoice extends Vue {
     quantity: 0,
   }
 
-  invoiceHeight = 0;
+  invoiceHeight = 0
 
   get selectedCustomer(): ICustomer {
     return this.customers.find(
@@ -211,7 +211,7 @@ export default class CreateInvoice extends Vue {
       console.log(result)
     })
 
-    this.downloadPdf();
+    this.downloadPdf()
 
     await this.$router.push('/orders')
   }
@@ -225,7 +225,7 @@ export default class CreateInvoice extends Vue {
       let height = domInvoice.clientHeight
 
       html2canvas(domInvoice).then((canvas) => {
-        let image = canvas.toDataURL('image/png');
+        let image = canvas.toDataURL('image/png')
         pdf.addImage(image, 'PNG', 0, 0, width * 0.55, height * 0.55)
         pdf.save('inoive')
       })
