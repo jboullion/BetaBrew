@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-container">
     <router-link to="/">
-      <img id="img-logo" alt="Beta Brew" src="@/assets/images/logo.png" />
+      <img id="imgLogo" alt="Beta Brew" src="@/assets/images/logo.png" />
     </router-link>
     <h1>Management Portal</h1>
 
@@ -66,8 +66,6 @@ export default class SideMenu extends Vue {
   box-sizing: border-box;
 }
 
-#img-logo {
-}
 
 h1 {
   font-size: 1.2rem;

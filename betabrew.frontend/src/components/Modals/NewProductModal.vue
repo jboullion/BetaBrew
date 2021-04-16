@@ -4,27 +4,27 @@
     <template v-slot:body>
       <ul class="new-product-list">
         <li>
-          <label for="product-isTaxable">Is Taxable?:</label>
+          <label for="isTaxable">Is Taxable?:</label>
           <input
             type="checkbox"
-            id="product-isTaxable"
+            id="isTaxable"
             v-model="newProduct.isTaxable"
           />
         </li>
         <li>
-          <label for="product-name">Name:</label>
-          <input type="text" id="product-name" v-model="newProduct.name" />
+          <label for="productName">Name:</label>
+          <input type="text" id="productName" v-model="newProduct.name" />
         </li>
         <li>
-          <label for="product-description">Description:</label>
+          <label for="productDescription">Description:</label>
           <textarea
-            id="product-description"
+            id="productDescription"
             v-model="newProduct.description"
           ></textarea>
         </li>
         <li>
-          <label for="product-price">Price (USD):</label>
-          <input type="number" id="product-price" v-model="newProduct.price" />
+          <label for="productPrice">Price (USD):</label>
+          <input type="number" id="productPrice" v-model="newProduct.price" />
         </li>
       </ul>
     </template>
