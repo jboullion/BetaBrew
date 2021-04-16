@@ -2,7 +2,7 @@
   <div class="btn-link">
     <button
       @click="onClick"
-      :class="['solar-button', { 'full-width': isFullWidth }]"
+      :class="['beta-button', { 'full-width': isFullWidth }]"
       type="button"
       :disabled="disabled"
     >
@@ -37,7 +37,7 @@ export default class BetaButton extends Vue {
 <style scoped lang="scss">
 @import '@/scss/global.scss';
 
-.solar-button {
+.beta-button {
   background-color: lighten($brand-blue, 10%);
   color: white;
   cursor: pointer;

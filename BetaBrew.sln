@@ -1,15 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaBrew.Data", "BetaBrew.Data\BetaBrew.Data.csproj", "{63EC0176-C489-4CA2-A716-8155F5BE7333}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetaBrew.Data", "BetaBrew.Data\BetaBrew.Data.csproj", "{63EC0176-C489-4CA2-A716-8155F5BE7333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaBrew.Services", "BetaBrew.Services\BetaBrew.Services.csproj", "{AB3EB04B-8F01-47CD-8B53-39FCC882526E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetaBrew.Services", "BetaBrew.Services\BetaBrew.Services.csproj", "{AB3EB04B-8F01-47CD-8B53-39FCC882526E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaBrew.Test", "BetaBrew.Test\BetaBrew.Test.csproj", "{720C442F-A210-4192-89C6-715B450976EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetaBrew.Test", "BetaBrew.Test\BetaBrew.Test.csproj", "{720C442F-A210-4192-89C6-715B450976EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{63EC0176-C489-4CA2-A716-8155F5BE7333} = {63EC0176-C489-4CA2-A716-8155F5BE7333}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaBrew.Web", "BetaBrew.Web\BetaBrew.Web.csproj", "{A2AB7A1E-69D5-4BB7-84FC-A9ED7380096F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetaBrew.Web", "BetaBrew.Web\BetaBrew.Web.csproj", "{A2AB7A1E-69D5-4BB7-84FC-A9ED7380096F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{63EC0176-C489-4CA2-A716-8155F5BE7333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +72,11 @@ Global
 		{A2AB7A1E-69D5-4BB7-84FC-A9ED7380096F}.Release|x64.Build.0 = Release|Any CPU
 		{A2AB7A1E-69D5-4BB7-84FC-A9ED7380096F}.Release|x86.ActiveCfg = Release|Any CPU
 		{A2AB7A1E-69D5-4BB7-84FC-A9ED7380096F}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3647614-B4D8-4B71-A095-B902A45B5624}
 	EndGlobalSection
 EndGlobal

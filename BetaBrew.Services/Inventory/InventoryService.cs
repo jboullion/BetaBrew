@@ -40,7 +40,7 @@ namespace BetaBrew.Services.Inventory
 
                 try
                 {
-                    CreateSnapshot(inventory);
+                    CreateSnapshot();
                 }
                 
                 catch (Exception e)
@@ -50,7 +50,7 @@ namespace BetaBrew.Services.Inventory
                 }
 
                 _db.SaveChanges();
-                
+
                 return new ServiceResponse<Data.Models.ProductInventory>
                 {
                     Data = inventory,
@@ -82,7 +82,7 @@ namespace BetaBrew.Services.Inventory
         
         public List<ProductInventorySnapshot> GetSnapshotHistory()
         {
-            var earliest = DateTime.UtcNow - TimeSpan.FromHours(6);
+            var earliest = DateTime.UtcNow - TimeSpan.FromHours(2);
             
             return _db.ProductInventorySnapshots
                 .Include(snap => snap.Product)
@@ -91,7 +91,11 @@ namespace BetaBrew.Services.Inventory
                 .ToList();
         }
         
-        
+        /// <summary>
+        /// Create a snapshot of a single item
+        /// </summary>
+        /// <param name="inventory"></param>
+        /*
         private void CreateSnapshot(ProductInventory inventory)
         {
             var snapshot = new ProductInventorySnapshot
@@ -102,6 +106,33 @@ namespace BetaBrew.Services.Inventory
             };
 
             _db.Add(snapshot);
+        }
+        */
+
+
+        /// <summary>
+        /// Create a snapshot of the current inventory
+        /// </summary>
+        private void CreateSnapshot()
+        {
+            var now = DateTime.UtcNow;
+
+            var inventories = _db.ProductInventories
+                .Include(inv => inv.Product)
+                .ToList();
+
+            foreach(var inventory in inventories)
+            {
+                var snapshot = new ProductInventorySnapshot
+                {
+                    SnapshotTime = now,
+                    Product = inventory.Product,
+                    QuantityOnHand = inventory.QuantityOnHand
+                };
+
+                _db.Add(snapshot);
+            }
+           
         }
     }
 }
